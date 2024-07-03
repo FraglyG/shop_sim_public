@@ -1,0 +1,47 @@
+.main_logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    gap: var(--sl-spacing-x-small);
+
+    height: 100%;
+    width: fit-content;
+
+    user-select: none;
+}
+
+.main_logo:hover {
+    cursor: pointer;
+}
+
+.main_logo_img {
+    height: 100%;
+    width: auto;
+}
+
+.main_logo_text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.main_logo_text>p {
+    margin: 0;
+}
+
+.main_logo_text>p:first-child {
+    font-size: var(--sl-font-size-2x-large);
+    transition: var(--sl-transition-x-fast);
+    color: var(--sl-color-primary-400);
+}
+
+.main_logo_text>p:last-child {
+    position: relative;
+    top: -10px;
+    font-size: var(--sl-font-size-medium);
+    transition: var(--sl-transition-x-fast);
+    color: var(--sl-color-primary-300);
+}

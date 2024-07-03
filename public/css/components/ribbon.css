@@ -1,0 +1,28 @@
+.main_ribbon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+
+    height: 70px;
+    width: calc(100% - 80px);
+
+    box-shadow: var(--sl-shadow-x-large);
+}
+
+@media screen and (max-width: 600px) {
+    .main_ribbon {
+        padding: 20px;
+        width: calc(100% - 40px);
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .main_ribbon>.main_logo>.main_logo_text {
+        display: none;
+    }
+}

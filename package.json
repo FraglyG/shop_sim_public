@@ -1,0 +1,27 @@
+{
+  "name": "sam_shop_sim",
+  "module": "src/index.ts",
+  "dependencies": {
+    "@elysiajs/html": "^1.0.2",
+    "@elysiajs/static": "^1.0.3",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.14.9",
+    "bcryptjs": "^2.4.3",
+    "bun-types": "^1.1.17",
+    "dotenv": "^16.4.5",
+    "elysia": "^1.0.27",
+    "elysia-session": "^0.0.5",
+    "mongoose": "^8.4.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "build_frontend": "tsc -p src_frontend/tsconfig.json",
+    "build_backend": "tsc -p src_backend/tsconfig.json",
+    "build": "bun run build_frontend && npm run build_backend",
+    "start": "bun run build_frontend && bun run src_backend/index.ts"
+  },
+  "type": "module"
+}

@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "lib": [
+            "dom",
+            "es2020"
+        ],
+        "strict": true,
+        "esModuleInterop": true,
+        "outDir": "../dist_frontend",
+        "baseUrl": "./",
+        "paths": {
+            "*": [
+                "/types/*"
+            ]
+        }
+    },
+    "include": [
+        "./**/*",
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
