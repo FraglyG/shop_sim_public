@@ -35,6 +35,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+// CHECK IF LOGIN POPUP:
+document.addEventListener("DOMContentLoaded", function () {
+    var login = new URLSearchParams(window.location.search).get("login");
+    if (!login)
+        return;
+    var loginPopup = document.querySelector(".login_form_container");
+    if (!loginPopup)
+        return;
+    loginPopup.style.display = "block";
+});
+// HANDLE LOGIN FORMS
 var loginForms = document.querySelectorAll('.login_form');
 loginForms.forEach(function (form) {
     form.addEventListener('submit', function (e) { return __awaiter(void 0, void 0, void 0, function () {
@@ -58,10 +69,36 @@ loginForms.forEach(function (form) {
                     result = _a.sent();
                     if (!result.success)
                         return [2 /*return*/, alert('Login failed: ' + (result.error || 'Unknown error'))];
-                    alert("WOuld Redirect Now");
                     window.location.href = "/";
                     return [2 /*return*/];
             }
         });
     }); });
+});
+// HANDLE BACKDROP
+var backdropActive = false;
+function updateBackdrop() {
+    console.log('updateBackdrop', backdropActive);
+    var loginBackdrop = document.createElement('div');
+    loginBackdrop.classList.add('login_form_backdrop');
+    if (backdropActive) {
+        document.body.appendChild(loginBackdrop);
+    }
+    else {
+        var backdrop = document.querySelectorAll('.login_form_backdrop');
+        backdrop.forEach(function (b) { return b.remove(); });
+    }
+}
+document.addEventListener("DOMContentLoaded", function () {
+    var loginPopupContainers = document.querySelectorAll('.login_form_container');
+    loginPopupContainers.forEach(function (container) {
+        var div = container;
+        function checkBackdrop() {
+            var displayStyle = div.style.getPropertyValue('display');
+            backdropActive = displayStyle != 'none';
+            updateBackdrop();
+        }
+        div.addEventListener("change", checkBackdrop);
+        checkBackdrop();
+    });
 });

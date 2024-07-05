@@ -21,27 +21,34 @@ app.use(staticPlugin({
     assets: "dist_frontend"
 }))
 
+// UTIL
+async function getUserFromRequest(cookie: Record<string, Cookie<any>>) {
+    const username = cookie["username"].value;
+    const session = cookie["session"].value;
+    if (!username || !session) return undefined;
+
+    const user = await userModel.findOne({ username });
+    if (!user || user.sessionToken !== session) return undefined;
+
+    return user
+}
+
 // MIDDLEWARE
 
 type RedirectType = (url: string, status?: 301 | 302 | 303 | 307 | 308 | undefined) => Response;
 const isAuthenticated = async (redirect: RedirectType, cookie: Record<string, Cookie<any>>) => {
-    const username = cookie["username"].value;
-    const session = cookie["session"].value;
-    if (!username || !session) return redirect("/?login=true");
-
-    console.log(`User has session: ${username} - ${session}`)
-
-    // ensure session is valid
-    const user = await userModel.findOne({ username }); // Warning: This is not efficient, not for production
-    if (!user || user.sessionToken !== session) return redirect("/?login=true");
-
-    console.log("User is authenticated");
+    const user = await getUserFromRequest(cookie);
+    if (!user) return redirect("/?login=true");
 };
 
 // ROUTES
 
 //, { beforeHandle: ({ cookie, redirect }) => isAuthenticated(redirect as any, cookie) }
-app.get("/", () => <PageHome />)
+app.get("/", async ({ cookie }) => {
+    const user = await getUserFromRequest(cookie);
+    return <PageHome user={user} />
+})
+
 app.get("/register", () => <PageRegister />)
 
 export async function initiateServer() {

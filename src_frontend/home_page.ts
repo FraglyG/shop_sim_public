@@ -73,15 +73,3 @@ async function stockItems() {
 }
 
 stockItems();
-
-// CHECK IF LOGIN POPUP:
-document.addEventListener("DOMContentLoaded", () => {
-    const login = new URLSearchParams(window.location.search).get("login");
-
-    if (login) {
-        const loginPopup = document.querySelector(".login_form_container") as HTMLDivElement | undefined;
-        if (!loginPopup) return;
-
-        loginPopup.style.display = "block";
-    }
-}) 

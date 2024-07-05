@@ -120,13 +120,3 @@ function stockItems() {
     });
 }
 stockItems();
-// CHECK IF LOGIN POPUP:
-document.addEventListener("DOMContentLoaded", function () {
-    var login = new URLSearchParams(window.location.search).get("login");
-    if (login) {
-        var loginPopup = document.querySelector(".login_form_container");
-        if (!loginPopup)
-            return;
-        loginPopup.style.display = "block";
-    }
-});

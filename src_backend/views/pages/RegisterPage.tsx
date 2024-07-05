@@ -10,7 +10,5 @@ export function PageRegister() {
                 <Login type="register" />
             </div>
         </body>
-
-        <script src="/dist_frontend/authentication.js"></script>
     </BaseHtml>
 }

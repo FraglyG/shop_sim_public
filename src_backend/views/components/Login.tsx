@@ -17,6 +17,7 @@ export function Login({ type, hidden }: { type: "register" | "login", hidden?: b
                 <sl-button type="submit">{actionName}</sl-button>
             </form>
 
+            <script src="/dist_frontend/components/login.js"></script>
         </div >
     )
 }
