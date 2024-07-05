@@ -8,6 +8,8 @@ import { PageRegister } from "./views/pages/RegisterPage";
 import { couldStartTrivia } from "typescript";
 import { itemModel } from "./mongo/models/item";
 import { PageItem } from "./views/pages/ItemPage";
+import { PageCheckout } from "./views/pages/CheckoutPage";
+import { PageBought } from "./views/pages/BoughtPage";
 
 export const app = new Elysia();
 
@@ -24,7 +26,7 @@ app.use(staticPlugin({
 }))
 
 // UTIL
-async function getUserFromRequest(cookie: Record<string, Cookie<any>>) {
+export async function getUserFromRequest(cookie: Record<string, Cookie<any>>) {
     const username = cookie["username"].value;
     const session = cookie["session"].value;
     if (!username || !session) return undefined;
@@ -51,12 +53,22 @@ app.get("/", async ({ cookie }) => {
     return <PageHome user={user} />
 })
 
+app.get("/checkout", async ({ cookie }) => {
+    const user = await getUserFromRequest(cookie);
+    return <PageCheckout user={user} />
+}, { beforeHandle: ({ cookie, redirect }) => isAuthenticated(redirect as any, cookie) })
+
 app.get("/item/:itemId", async ({ params, cookie }) => {
-    const itemId = params.itemId;
-    const item = await itemModel.findOne({ id: itemId })
+    const item = await itemModel.findOne({ id: params.itemId })
     if (!item) return <div>Item not found</div>;
+
     const user = await getUserFromRequest(cookie);
     return <PageItem item={item} user={user} />
+})
+
+app.get("/purchase/success", async ({ cookie }) => {
+    const user = await getUserFromRequest(cookie);
+    return <PageBought user={user} />
 })
 
 app.get("/register", () => <PageRegister />)

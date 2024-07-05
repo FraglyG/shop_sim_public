@@ -1,43 +1,32 @@
-function toastNotification(title: string, description: string) {
-    const alert = document.createElement('sl-alert');
-    (alert as any).variant = 'primary';
-    (alert as any).duration = '3000';
-    (alert as any).closable = true;
-
-    const icon = document.createElement('sl-icon');
-    icon.slot = 'icon';
-    (icon as any).name = 'info-circle';
-
-    const strong = document.createElement('strong');
-    strong.textContent = title;
-
-    const br = document.createElement('br');
-
-    const text = document.createTextNode(description);
-
-    alert.appendChild(icon);
-    alert.appendChild(strong);
-    alert.appendChild(br);
-    alert.appendChild(text);
-
-    document.body.appendChild(alert);
-    (alert as any).toast();
-}
+import { toastNotification } from "./modules/notification.js";
+import { updateRibbonCartIcon } from "./modules/ribbonCart.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+    const itemId = window.location.pathname.split('/').pop();
+    if (!itemId) return;
+
     const buyButton = document.querySelector('.buy_button') as HTMLButtonElement;
 
     buyButton.addEventListener('click', async () => {
-        // const response = await fetch('/v1/api/item/buy', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ itemId: 1 })
-        // });
+        try {
+            const rawQuantity = (document.querySelector('.buy_amount') as HTMLInputElement).value;
+            const quantity = parseInt(rawQuantity || "1");
+            if (!quantity || quantity <= 0) return toastNotification('Invalid Quantity', 'Please enter a valid quantity', 'danger');
 
-        // const result = await response.json();
+            const response = await fetch('/v1/api/item/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ items: [{ itemId, quantity }] })
+            });
 
-        // if (!result.success) return toastNotification('Failed to buy item', result.error || 'Unknown error');
+            const result = await response.json();
+            if (!result.success) return toastNotification('Failed to add item', result.error || result.message || 'Unknown error', 'danger');
 
-        toastNotification('Added To Cart', 'This item was succesfully added to your cart!');
+            toastNotification('Added To Cart', 'This item was succesfully added to your cart!', 'success');
+            updateRibbonCartIcon();
+        } catch (error) {
+            if (error instanceof Error) toastNotification('Failed to add item', error.message || 'Unknown error', 'danger');
+            else toastNotification('Failed to add item', 'Unknown error', 'danger');
+        }
     });
 })

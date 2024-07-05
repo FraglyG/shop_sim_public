@@ -4,10 +4,6 @@ import { BaseHtml } from "../components/BaseHtml";
 import { Ribbon } from "../components/Ribbon";
 
 export function PageItem({ user, item }: { user?: ShopUser, item: ShopItem }) {
-
-    console.log(item) // Logs { price: 10, ratingAverage: 4.7, stock: 50 }
-    console.log(item.ratingAverage) //Logs undefined
-
     const categoryName = item.category[0].toUpperCase() + item.category.substring(1).toLowerCase();
     const itemRating = item.ratingAverage ?? 0;
 
@@ -64,6 +60,6 @@ export function PageItem({ user, item }: { user?: ShopUser, item: ShopItem }) {
             </div>
         </body>
 
-        <script src="/dist_frontend/item_page.js"></script>
+        <script type="module" src="/dist_frontend/item_page.js"></script>
     </BaseHtml>
 }

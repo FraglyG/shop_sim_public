@@ -31,6 +31,9 @@ const itemSchema = new Schema<ShopItem>({
     stock: Number,
     category: String,
     images: [String],
+
+    ratingAverage: Number,
+    ratingCount: Number,
 });
 
 export const itemModel = model('Item', itemSchema);

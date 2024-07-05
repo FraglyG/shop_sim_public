@@ -18,6 +18,7 @@ function HtmlHead(props: { title?: string, children: JSX.Element | JSX.Element[]
         <link rel="stylesheet" href="/public/css/components/logo.css" />
         <link rel="stylesheet" href="/public/css/components/ribbon.css" />
         <link rel="stylesheet" href="/public/css/components/login.css" />
+        <link rel="stylesheet" href="/public/css/components/checkout_item.css" />
 
         <link rel="stylesheet" href="/public/css/fonts/poppins.css" />
 

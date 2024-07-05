@@ -1,0 +1,154 @@
+/*
+<div class="checkout_item">
+    <div class="checkout_item_image">
+        <img src={item.images[0]} />
+    </div>
+    <div class="checkout_item_details">
+        <div class="checkout_item_info">
+            <div class="checkout_item_name">{item.name}</div>
+            <div class="checkout_item_description">{item.description}</div>
+        </div>
+        <div class="checkout_item_pricing">
+            <div class="checkout_item_price">{item.price}</div>
+            <div class="checkout_item_count">{quantity}</div>
+        </div>
+    </div>
+</div>
+*/
+
+/* ANIMATIONS */
+
+@keyframes keyframes_fade_left {
+    0% { opacity: 1; transform: translateX(0) }
+    100% { opacity: 0; transform: translateX(-100%) }
+}
+
+.anim_fade_left {
+    animation-name: keyframes_fade_left;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes keyframes_fade_top {
+    0% { opacity: 1; transform: translateY(0) }
+    100% { opacity: 0; transform: translateY(-100%) }
+}
+
+.anim_fade_top {
+    animation-name: keyframes_fade_top;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+/* ACTION RIBBON */
+
+.checkout_item_action_ribbon {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    position: relative;
+    height: 0px;
+    top: -10px;
+    right: -25px;
+}
+
+.checkout_item_remove {
+    position: relative;
+    right: 0;
+}
+
+/* CHECKOUT ITEMS */
+
+.checkout_empty {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    width: 100%;
+    height: 100%;
+}
+
+.checkout_empty>h2 {
+    font-size: 24px;
+}
+
+.checkout_item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    width: calc(100% - 60px);
+    height: 75px;
+
+    padding: 30px;
+    border-radius: 5px;
+
+    box-shadow: var(--sl-shadow-x-large);
+    background-color: white;
+}
+
+.checkout_item_image img {
+    width: 100px;
+    height: 100px;
+}
+
+.checkout_item_details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    width: calc(100% - 150px);
+    height: 100%;
+}
+
+.checkout_item_info>p {
+    margin: 0;
+}
+
+.checkout_item_info>p:first-child {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.checkout_item_info>p:last-child {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.checkout_item_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    gap: 5px;
+
+    width: 100%;
+    height: 100%;
+}
+
+.checkout_item_pricing {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    gap: 5px;
+
+    width: fit-content;
+    height: fit-content;
+}
+
+.checkout_item_pricing>p {
+    margin: 0;
+    color: rgb(85, 85, 85);
+}

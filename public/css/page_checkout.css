@@ -1,0 +1,126 @@
+body {
+    background-color: rgb(247, 247, 247);
+}
+
+/* PAGE */
+
+.page_container {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkout_page {
+    width: calc(100% - 160px);
+    max-width: 1000px;
+    height: fit-content;
+
+    padding: 80px;
+    padding-top: 20px;
+}
+
+.checkout_page_details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+/* ITEM LIST */
+
+.item_list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    width: calc(100% - 340px - 80px);
+}
+
+/* RECEIPT */
+
+.receipt_container {
+    max-width: 300px;
+    width: 100%;
+
+    height: fit-content;
+}
+
+.receipt {
+    width: calc(100% - 40px);
+    height: fit-content;
+
+    padding: 20px;
+    border-radius: 5px;
+
+    box-shadow: var(--sl-shadow-x-large);
+    background-color: white;
+}
+
+.receipt>h2 {
+    margin: 0;
+}
+
+.receipt_item_list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.receipt_item {
+    width: 100%;
+    height: fit-content;
+}
+
+.receipt_item>p {
+    margin: 0;
+}
+
+.receipt_item_name {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.receipt_item_cost {
+    font-size: 12px;
+    color: rgb(202, 202, 202);
+}
+
+/* RECEIPT INFO */
+
+.receipt_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.receipt_info>p {
+    margin: 0;
+}
+
+.receipt_info>p:first-child {
+    font-size: 16px;
+    color: rgb(59, 59, 59);
+}
+
+.receipt_info>p:last-child {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.receipt_total>p:last-child {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* BUY BUTTON */
+#checkout_button {
+    margin-top: 15px;
+    width: 100%;
+    box-shadow: var(--sl-shadow-x-large);
+}
