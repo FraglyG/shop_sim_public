@@ -9,6 +9,11 @@ export function Ribbon({ user }: { user?: ShopUser }) {
         <Logo />
 
         <div class="main_ribbon_right">
+            <sl-button style="margin-inline-start: 1rem;" size="large" circle>
+                <sl-icon name="basket3"></sl-icon>
+                <sl-badge variant="primary" pill>6</sl-badge>
+            </sl-button>
+
             {username ? `<sl-avatar class="main_ribbon_avatar" initials="${initials}"></sl-avatar>` : `<sl-button class="main_ribbon_login">Login</sl-button>`}
         </div>
 

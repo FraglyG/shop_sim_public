@@ -45,6 +45,10 @@ async function loadItemHtml(item: ShopItem) {
     footer.appendChild(moreInfoButton);
     footer.appendChild(rating);
 
+    moreInfoButton.addEventListener("click", () => {
+        window.location.href = "/item/" + item.id;
+    })
+
     return card;
 }
 

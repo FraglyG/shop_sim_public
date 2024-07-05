@@ -74,6 +74,9 @@ function loadItemHtml(item) {
             card.appendChild(footer);
             footer.appendChild(moreInfoButton);
             footer.appendChild(rating);
+            moreInfoButton.addEventListener("click", function () {
+                window.location.href = "/item/" + item.id;
+            });
             return [2 /*return*/, card];
         });
     });

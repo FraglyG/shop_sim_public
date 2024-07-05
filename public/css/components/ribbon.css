@@ -14,6 +14,15 @@
     box-shadow: var(--sl-shadow-x-large);
 }
 
+.main_ribbon_right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
 @media screen and (max-width: 600px) {
     .main_ribbon {
         padding: 20px;

@@ -6,6 +6,8 @@ import { PageHome } from "./views/pages/HomePage";
 import { userModel } from "./mongo/models/user";
 import { PageRegister } from "./views/pages/RegisterPage";
 import { couldStartTrivia } from "typescript";
+import { itemModel } from "./mongo/models/item";
+import { PageItem } from "./views/pages/ItemPage";
 
 export const app = new Elysia();
 
@@ -47,6 +49,14 @@ const isAuthenticated = async (redirect: RedirectType, cookie: Record<string, Co
 app.get("/", async ({ cookie }) => {
     const user = await getUserFromRequest(cookie);
     return <PageHome user={user} />
+})
+
+app.get("/item/:itemId", async ({ params, cookie }) => {
+    const itemId = params.itemId;
+    const item = await itemModel.findOne({ id: itemId })
+    if (!item) return <div>Item not found</div>;
+    const user = await getUserFromRequest(cookie);
+    return <PageItem item={item} user={user} />
 })
 
 app.get("/register", () => <PageRegister />)
