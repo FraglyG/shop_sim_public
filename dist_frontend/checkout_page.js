@@ -37,8 +37,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import { toastNotification } from "./modules/notification.js";
 import { updateRibbonCartIcon } from "./modules/ribbonCart.js";
 function getNumberFromElement(el) {
-    var _a;
-    return +((_a = el.textContent) === null || _a === void 0 ? void 0 : _a.match(/\d+/g)[0]);
+    var numberString = el.textContent || "0";
+    var numberRegexed = numberString.replace(/[^0-9.]/g, '');
+    return parseFloat(numberRegexed);
 }
 function currencyFormat(num) {
     return "R".concat(num.toFixed(2));
