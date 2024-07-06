@@ -2,7 +2,8 @@ import { toastNotification } from "./modules/notification.js";
 import { updateRibbonCartIcon } from "./modules/ribbonCart.js";
 
 function getNumberFromElement(el: Element) {
-    return +(el.textContent?.match(/\d+/g)![0] as string);
+    const numberString = el.textContent?.match(/\d+(\.\d+)?/g)?.[0];
+    return numberString ? parseFloat(numberString) : 0;
 }
 
 function currencyFormat(num: number) {
