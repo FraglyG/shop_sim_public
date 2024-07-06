@@ -12,8 +12,17 @@ export interface ShopUser {
     cart: UserCartEntry[]
 }
 
+function randomUserId() {
+    return Date.now().toString(36) + "-" + crypto.randomUUID().split("-").splice(0, 3).join("-");
+}
+
 const userSchema = new Schema<ShopUser>({
-    id: String,
+    id: {
+        type: String,
+        default: randomUserId,
+        unique: true,
+    },
+    
     username: String,
     passwordHash: String,
     sessionToken: String,

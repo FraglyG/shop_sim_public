@@ -24,8 +24,13 @@ app.group("/auth", app =>
             const username = iBody.username;
             const password = iBody.password;
 
+            // Validate input (prevent SQL Injection, etc.)
             if (!username || !password) return { success: false, error: "Missing username or password" };
             if (typeof username != "string" || typeof password != "string") return { success: false, error: "Invalid username or password" };
+
+            // Ensure username is unique (case insensitive)
+            const userExists = await userModel.findOne({ username: { $regex: new RegExp(`^${username}$`, "i") } });
+            if (userExists) return { success: false, error: "Username already exists" };
 
             // Register user
             const sessionToken = crypto.randomUUID();
@@ -45,6 +50,7 @@ app.group("/auth", app =>
             const username = iBody.username;
             const password = iBody.password;
 
+            // Validate input
             if (!username || !password) return { success: false, error: "Missing username or password" };
             if (typeof username != "string" || typeof password != "string") return { success: false, error: "Invalid username or password" };
 

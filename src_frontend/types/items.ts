@@ -14,6 +14,7 @@ interface ShopItem {
     id: string,
     name: string,
     description: string,
+    longDescription: string,
     price: number,
     stock: number,
     category: ItemCategory,

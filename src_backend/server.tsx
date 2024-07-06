@@ -2,14 +2,14 @@ import { html } from "@elysiajs/html";
 import staticPlugin from "@elysiajs/static";
 import Elysia, { Cookie } from "elysia";
 import { CONFIG } from "./config";
-import { PageHome } from "./views/pages/HomePage";
-import { userModel } from "./mongo/models/user";
-import { PageRegister } from "./views/pages/RegisterPage";
-import { couldStartTrivia } from "typescript";
 import { itemModel } from "./mongo/models/item";
-import { PageItem } from "./views/pages/ItemPage";
-import { PageCheckout } from "./views/pages/CheckoutPage";
+import { userModel } from "./mongo/models/user";
+import { PageAdmin } from "./views/pages/AdminPage";
 import { PageBought } from "./views/pages/BoughtPage";
+import { PageCheckout } from "./views/pages/CheckoutPage";
+import { PageHome } from "./views/pages/HomePage";
+import { PageItem } from "./views/pages/ItemPage";
+import { PageRegister } from "./views/pages/RegisterPage";
 
 export const app = new Elysia();
 
@@ -69,6 +69,15 @@ app.get("/item/:itemId", async ({ params, cookie }) => {
 app.get("/purchase/success", async ({ cookie }) => {
     const user = await getUserFromRequest(cookie);
     return <PageBought user={user} />
+})
+
+app.get("/admin", async ({ cookie, redirect }) => {
+    const user = await getUserFromRequest(cookie);
+
+    if (!user) return redirect("/?login=true"); // redirect if no user
+    if (user.username !== CONFIG.ADMIN.USERNAME) return redirect("/") // redirect if not admin
+
+    return <PageAdmin user={user} />
 })
 
 app.get("/register", () => <PageRegister />)

@@ -1,4 +1,4 @@
-import { itemModel } from "../mongo/models/item";
+import { ItemCategory, itemModel } from "../mongo/models/item";
 import { app, getUserFromRequest } from "../server";
 
 type ItemBuyBody = {
@@ -10,6 +10,17 @@ type ItemBuyBody = {
 
 type ItemRemoveBody = {
     items: string[];
+}
+
+type ItemCreateBody = {
+    id?: string;
+    name: string;
+    description: string;
+    longDescription: string;
+    price: number;
+    stock: number;
+    category: string;
+    images: string[];
 }
 
 async function purchaseItem(itemId: string, quantity: number) {
@@ -52,14 +63,91 @@ app.group("/v1/api/item", app =>
             return { success: true };
         })
 
+        .get("/search", async ({ query }) => {
+            let items = await itemModel.find({ name: { $regex: query.q, $options: "i" } });
+            if (!items || items.length == 0) items = await itemModel.find({ id: { $regex: query.q, $options: "i" } }); // search by id if no name matches
+            return { success: true, items };
+        })
+
         .get("/get/:id", async ({ params }) => {
             const item = await itemModel.findOne({ id: params.id });
-            return item;
+            return { success: true, item: item };
         })
 
         .get("/get/cart", async ({ cookie }) => {
             const user = await getUserFromRequest(cookie);
             return { success: true, cart: user?.cart ?? [] };
+        })
+
+        // create new item
+        .post("/create", async ({ body }) => {
+            const iBody = body as ItemCreateBody;
+
+            // Input Checks
+            //  This is super ugly but I don't have time to make it look nice, i'm speedrunning this stuff so I can study for exams
+            if (!iBody.name || typeof iBody.name !== "string") return { success: false, error: "Invalid name" };
+            if (!iBody.description || typeof iBody.description !== "string") return { success: false, error: "Invalid description" };
+            if (!iBody.longDescription || typeof iBody.longDescription !== "string") return { success: false, error: "Invalid long description" };
+            if (!iBody.price || typeof iBody.price !== "number") return { success: false, error: "Invalid price" };
+            if (!iBody.stock || typeof iBody.stock !== "number") return { success: false, error: "Invalid stock" };
+            if (!iBody.category || typeof iBody.category !== "string") return { success: false, error: "Invalid category" };
+            if (!iBody.images || !Array.isArray(iBody.images)) return { success: false, error: "Invalid images" };
+
+            // Ensure Name is Unique 
+            const existingItem = await itemModel.findOne({ name: iBody.name });
+            if (existingItem) return { success: false, error: "Item already exists" };
+
+            // Create Item
+            const item = await itemModel.create({
+                name: iBody.name,
+                description: iBody.description,
+                longDescription: iBody.longDescription,
+                price: iBody.price,
+                stock: iBody.stock,
+                category: iBody.category,
+                images: iBody.images,
+            });
+
+            return { success: true, item };
+        })
+
+        // Update Item
+        .post("/update", async ({ body, params }) => {
+            const iBody = body as ItemCreateBody;
+
+            // Input Checks
+            if (!iBody.id || typeof iBody.id !== "string") return { success: false, error: "Invalid id" };
+            if (!iBody.name || typeof iBody.name !== "string") return { success: false, error: "Invalid name" };
+            if (!iBody.description || typeof iBody.description !== "string") return { success: false, error: "Invalid description" };
+            if (!iBody.longDescription || typeof iBody.longDescription !== "string") return { success: false, error: "Invalid long description" };
+            if (!iBody.price || typeof iBody.price !== "number") return { success: false, error: "Invalid price" };
+            if (!iBody.stock || typeof iBody.stock !== "number") return { success: false, error: "Invalid stock" };
+            if (!iBody.category || typeof iBody.category !== "string") return { success: false, error: "Invalid category" };
+            if (!iBody.images || !Array.isArray(iBody.images)) return { success: false, error: "Invalid images" };
+
+            // Update Item
+            const item = await itemModel.findOne({ id: iBody.id });
+            if (!item) return { success: false, error: "Item not found" };
+
+            item.name = iBody.name;
+            item.description = iBody.description;
+            item.longDescription = iBody.longDescription;
+            item.price = iBody.price;
+            item.stock = iBody.stock;
+            item.category = iBody.category as ItemCategory;
+            item.images = iBody.images;
+
+            await item.save();
+            return { success: true, item };
+        })
+
+        // Delete Item
+        .delete("/delete/:id", async ({ params }) => {
+            const item = await itemModel.findOne({ id: params.id });
+            if (!item) return { success: false, error: "Item not found" };
+
+            await itemModel.deleteOne({ id: params.id });
+            return { success: true };
         })
 
         // add item to the cart

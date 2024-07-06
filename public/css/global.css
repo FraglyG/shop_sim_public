@@ -5,6 +5,7 @@ body {
 
 h1, h2, h3,
 p,
+label, slot, sl-input, sl-textarea, sl-select,
 strong, small {
     font-family: "Poppins", sans-serif;
     font-weight: 400;

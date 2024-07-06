@@ -22,8 +22,16 @@ export interface ShopItem {
     ratingCount: number,
 }
 
+function randomItemID() {
+    return Date.now().toString(36) + "-" + crypto.randomUUID().split("-").splice(0, 3).join("-");
+}
+
 const itemSchema = new Schema<ShopItem>({
-    id: String,
+    id: {
+        type: String,
+        default: randomItemID,
+        unique: true,
+    },
     name: String,
     description: String,
     longDescription: String,
@@ -32,8 +40,14 @@ const itemSchema = new Schema<ShopItem>({
     category: String,
     images: [String],
 
-    ratingAverage: Number,
-    ratingCount: Number,
+    ratingAverage: {
+        type: Number,
+        default: 0,
+    },
+    ratingCount: {
+        type: Number,
+        default: 0,
+    },
 });
 
 export const itemModel = model('Item', itemSchema);

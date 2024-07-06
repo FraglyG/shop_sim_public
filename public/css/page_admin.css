@@ -1,0 +1,79 @@
+body {
+    background-color: rgb(247, 247, 247);
+}
+
+/* PAGE */
+
+.page_container {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin_page {
+    padding: 20px;
+    width: calc(100% - 40px);
+    max-width: calc(400px - 40px);
+
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ADMIN CONTENT */
+
+.admin_content {
+    width: 100%;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* UTL */
+.item_row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ACTION ROW */
+
+.admin_action_ribbon {
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin_search_bar {
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: row;
+}
+
+/* SHOP ITEM */
+.shop_item {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    padding: 30px;
+    border-radius: 5px;
+    background-color: white;
+}

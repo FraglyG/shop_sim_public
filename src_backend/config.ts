@@ -7,4 +7,7 @@ export const CONFIG = {
     DB: {
         URL: process.env.MONGO_URL,
     },
+    ADMIN: {
+        USERNAME: process.env.ADMIN_USERNAME,
+    }
 }
