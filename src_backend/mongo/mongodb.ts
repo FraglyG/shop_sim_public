@@ -11,6 +11,12 @@ const CONNECT_URL = CONFIG.DB.URL
 export async function initiateDatabase() {
     // check for mongodb connection
     if (!CONNECT_URL) {
+
+        // WARNING: Memory store is actually not supported in this app 
+        // I was gonna add support for it for dev purposes but didn't have time!
+        // I could change the warn message but that means I'd have to remove these comments
+        // and if so then why'd i type this out? So I really have no choice but to leave this here 
+
         console.warn("No MongoDB connection URL provided provided, using memory store...")
         return true
     }

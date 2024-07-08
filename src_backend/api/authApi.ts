@@ -2,6 +2,12 @@ import { userModel } from "../mongo/models/user";
 import { app } from "../server";
 import * as bcrypt from "bcryptjs";
 
+/*
+Hendrik's note:
+    This is a very simple and scuffed authentication API, in reality you'd want to have a lot more stuff here
+    For example, I haven't added support for multiple sessions (forgor about that tbh lol)
+*/
+
 type LoginBody = {
     username: string;
     password: string;

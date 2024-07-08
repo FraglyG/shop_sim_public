@@ -15,6 +15,7 @@ export const app = new Elysia();
 
 app.use(html())
 
+// Add some public staticfile endpoints
 app.use(staticPlugin({
     prefix: "/public",
     assets: "public"
@@ -32,7 +33,7 @@ export async function getUserFromRequest(cookie: Record<string, Cookie<any>>) {
     if (!username || !session) return undefined;
 
     const user = await userModel.findOne({ username });
-    if (!user || user.sessionToken !== session) return undefined;
+    if (!user || user.sessionToken !== session) return undefined; // Ensure user session is valid
 
     return user
 }
@@ -82,10 +83,15 @@ app.get("/admin", async ({ cookie, redirect }) => {
 
 app.get("/register", () => <PageRegister />)
 
+// Start the server
 export async function initiateServer() {
+    // Import API endpoints
+    //      I typically make functionality for auto importing these but I'm running out of time
+
     await import("./api/itemApi");
     await import("./api/authApi");
 
+    // Start the server
     app.listen(CONFIG.SITE.PORT || 3000, () => {
         console.log(`Server started on port ${CONFIG.SITE.PORT || 3000}`);
     });

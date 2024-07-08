@@ -31,29 +31,7 @@ export function PageAdmin({ user }: { user?: ShopUser }) {
 
                     <div id="admin_content" class="admin_content">
                         {/* load all items here on frontend */}
-
-
-                        {/* EXAMPLE */}
-                        {/* 
-                        
-                        export interface ShopItem {
-                            id: string,
-                            name: string,
-                            description: string,
-                            longDescription: string,
-
-                            price: number,
-                            stock: number,
-                            category: ItemCategory,
-                            images: string[],
-
-                            ratingAverage: number, // 0-5
-                            ratingCount: number,
-                        }
-                        */}
-
                         <p>Nothing Here...</p>
-
                     </div>
 
                 </div>

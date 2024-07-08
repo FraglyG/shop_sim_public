@@ -1,6 +1,25 @@
 import { ItemCategory, itemModel } from "../mongo/models/item";
 import { app, getUserFromRequest } from "../server";
 
+/*
+Hendrik's note:
+    This API is very rushed.. I'm sorry - had to study for exams so i finished this super quickly
+    If I could keep working on this though I'd split this API up into multiple APIs:
+        - Item API
+        - Cart API
+        - Admin API
+        - Checkout API
+
+    This would make the code more modular and easier to maintain, as well as easier to understand!!
+    We don't want to pump all functionality into one general API like this, it's not good practice :P
+
+    Also, I would add a lot more input validation and error handling in a real-world application
+*/
+
+
+// SPECIFY TYPES 
+//      These are also scuffed, if I had more time I'd have made these more generalized and reusable
+
 type ItemBuyBody = {
     items: {
         itemId: string;
@@ -23,6 +42,7 @@ type ItemCreateBody = {
     images: string[];
 }
 
+// Function for handling item purchase logic
 async function purchaseItem(itemId: string, quantity: number) {
     const item = await itemModel.findOne({ id: itemId });
 
@@ -37,11 +57,13 @@ async function purchaseItem(itemId: string, quantity: number) {
 
 app.group("/v1/api/item", app =>
     app
+        // returns a list of all items, to do this we just find all items in the item collection of our database!
         .get("/list", async () => {
             const items = await itemModel.find();
             return { success: true, items };
         })
 
+        // Checkout the cart
         .post("/checkout", async ({ cookie }) => {
             const user = await getUserFromRequest(cookie);
             if (!user) return { success: false, error: "Not logged in" };
@@ -63,17 +85,22 @@ app.group("/v1/api/item", app =>
             return { success: true };
         })
 
+        // search items
+        //      In a real world application I'd add some tokenization + cosine similarity for better search results
+        //      Although since this is only used by admins, it's not that important, you can even just use a Levenshtien distance checker
         .get("/search", async ({ query }) => {
             let items = await itemModel.find({ name: { $regex: query.q, $options: "i" } });
             if (!items || items.length == 0) items = await itemModel.find({ id: { $regex: query.q, $options: "i" } }); // search by id if no name matches
             return { success: true, items };
         })
 
+        // get item by id
         .get("/get/:id", async ({ params }) => {
             const item = await itemModel.findOne({ id: params.id });
             return { success: true, item: item };
         })
 
+        // get the user's cart
         .get("/get/cart", async ({ cookie }) => {
             const user = await getUserFromRequest(cookie);
             return { success: true, cart: user?.cart ?? [] };
@@ -192,10 +219,16 @@ app.group("/v1/api/item", app =>
             const user = await getUserFromRequest(cookie);
             if (!user) return { success: false, error: "Not logged in" };
 
-            for (const itemId of iBody.items) {
-                user.cart = user.cart.filter(cartItem => cartItem.item.id != itemId);
-                user.markModified("cart");
-            }
+            // for (const itemId of iBody.items) {
+            //     // this is kinda terrible ngl lmfao 💀
+            //     // typa shit produced at 3 am
+            //     user.cart = user.cart.filter(cartItem => cartItem.item.id != itemId);
+            //     user.markModified("cart");
+            // }
+
+            // Way better:
+            user.cart = user.cart.filter(cartItem => !iBody.items.includes(cartItem.item.id));
+            user.markModified("cart");
 
             await user.save();
             return { success: true, cart: user.cart };
