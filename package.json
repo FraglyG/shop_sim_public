@@ -21,7 +21,7 @@
     "build_frontend": "tsc -p src_frontend/tsconfig.json",
     "build_backend": "tsc -p src_backend/tsconfig.json",
     "build": "bun run build_frontend && npm run build_backend",
-    "start": "bun run src_backend/index.ts",
+    "start": "bun run dist_backend/index.js",
     "qstart": "bun run build_frontend && bun run src_backend/index.ts"
   },
   "type": "module"
