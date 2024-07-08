@@ -4,6 +4,9 @@
 
 Mr. Sam asked me to make him a shop simulator for demonstration purposes, I did that within 12 hours. This is that website! He said he'd only use it for this one thing though and I don't want my 12 hours of development to go to waste so I figured I'd make it open source.
 
+You can view a production site of this here: https://shopsim.isdev.co/
+(I don't know how long I'll keep that site up so if it's gone then just assume I took it down)
+
 ## How Was This Made?
 
 How was this made? 
