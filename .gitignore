@@ -1,5 +1,10 @@
 # Based on https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
 
+# distribution
+
+dist_frontend
+dist_backend
+
 # Logs
 
 logs

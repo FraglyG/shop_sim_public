@@ -3,9 +3,9 @@ export function Login({ type, hidden }: { type: "register" | "login", hidden?: b
 
     return (
         <div class="login_form_container" style={hidden == true ? "display: none;" : ""} >
-            <p cass="login_form_title">{actionName}</p>
+            <p class="login_form_title">{actionName}</p>
 
-            <form class="login_form" onSubmit={(e: any) => { e.preventDefault(); return false }}>
+            <form class="login_form">
 
                 <p style="display: none;" class="login_form_type">{type}</p>
                 <sl-input class="login_form_username" label="Username" placeholder="Your user name..." autofocus={true}></sl-input>
